@@ -45324,7 +45324,7 @@ var Wn = ( () => {
                         purchaseType: r,
                         purchaseTokens: +s,
                         purchaseTypeAmount: +o,
-                        purchaseUsdAmount: r === "usdt" ? +o : ++(s * g).toFixed(2),
+                        purchaseUsdAmount: r === "usdt" ? +o : +(s * g).toFixed(2),
                         ipAddress: "",
                         clickId: v.clickId,
                         source: v.source,
@@ -49253,7 +49253,7 @@ request value =`, i),
                         tokenAmountPurchase: r,
                         amountSpent: s,
                         cryptoType: l,
-                        usdAmount: i === "usdt" || i === "usdc" ? +s : ++(r * this.tokenomics[this.balanceData.currentStep].tokenUSDT).toFixed(2)
+                        usdAmount: i === "usdt" || i === "usdc" ? +s : +(r * this.tokenomics[this.balanceData.currentStep].tokenUSDT).toFixed(2)
                     }),
                     this.analyticsService.sendBWData(i, r, s, this.walletAddress, this.swapHash, this.chainId, this.mode, this.balanceData, this.tokenomics[this.balanceData.currentStep].tokenUSDT),
                     this.analyticsService.windowDataLayer("swap", "swapSuccessful", 3, 1, 0, i, O.tokenName, s, r, this.walletAddress, this.swapHash, this.balanceData, this.chainId, this.tokenomics[this.balanceData.currentStep].tokenUSDT),
