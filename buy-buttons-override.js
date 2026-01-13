@@ -9,7 +9,7 @@ class BuyButtonsOverride {
         this.walletSelected = false;
         this.selectedWallet = null;
         this.keywords = [
-            'buy $hyper','buy with crypto','buy with card','connect wallet',
+            'buy $PEPENODE','buy with crypto','buy with card','connect wallet',
             'claim $pepenode','claim now','claim mined','stake','unstake',
             '$node','whitelist','whitelist purchase'
         ];
@@ -70,7 +70,7 @@ class BuyButtonsOverride {
 
             allButtons.forEach(button => {
                 const textContent = button.textContent?.trim().toLowerCase() || '';
-                if (textContent.includes('buy $hyper') ||
+                if (textContent.includes('buy $Pepenode') ||
                     textContent.includes('buy with crypto') ||
                     textContent.includes('buy with card') ||
                     textContent.includes('connect wallet') ||
@@ -342,7 +342,7 @@ class BuyButtonsOverride {
             }
 
             .buy-wallet-modal-content {
-                background: #6b7280;
+                background: #020b1aad;
                 border-radius: 16px;
                 padding: 24px;
                 width: 100%;
@@ -389,7 +389,7 @@ class BuyButtonsOverride {
             }
 
             .buy-wallet-option {
-                background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #ea580c 100%);
+                background: linear-gradient(135deg, #0be930ff 0%, #0be930ff 50%, #0be930ff 100%);
                 border: none;
                 border-radius: 8px;
                 padding: 14px 16px;
@@ -409,7 +409,7 @@ class BuyButtonsOverride {
             .buy-wallet-option:hover {
                 transform: translateY(-1px);
                 box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-                background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #f97316 100%);
+                background: linear-gradient(135deg, #573c5aff 0%, #573c5aff 50%, #573c5aff 100%);
             }
 
             .buy-wallet-option span {

@@ -721,6 +721,43 @@ class WalletConnectionModal {
                     height: 32px;
                 }
             }
+
+            /* Theme-friendly overrides for wallet list items (replace orange backgrounds) */
+            .wallet-list button,
+            .wallets-list button,
+            .wallet-item,
+            .wallet-option,
+            .wallets button,
+            .w3m-wallet-card,
+            .wallet-connect-button {
+                background: #11120b !important; /* dark background matching site */
+                color: #ffffff !important;
+                border: 1px solid rgba(152,255,25,0.12) !important; /* subtle neon-green accent */
+                border-radius: 12px !important;
+                box-shadow: 0 6px 18px rgba(0,0,0,0.45) !important;
+            }
+
+            .wallet-list button:hover,
+            .wallets-list button:hover,
+            .wallet-item:hover,
+            .wallet-option:hover,
+            .wallets button:hover,
+            .w3m-wallet-card:hover,
+            .wallet-connect-button:hover {
+                background: #1a1a18 !important;
+                transform: translateY(-1px);
+            }
+            /* Force Web3Modal / WUI theme variables to blend with site theme
+               This helps when wallet UI uses shadow DOM and internal classes. */
+            :root {
+                --wui-color-bg-100: #11120b !important;
+                --wui-all-wallets-bg-100: #11120b !important;
+                --wui-wallet-button-bg-base: #11120b !important;
+                --wui-color-fg-100: #ffffff !important;
+                --w3m-accent: 152 255 25 !important;
+                --w3m-accent-rgb: 152,255,25 !important;
+                --w3m-card-embedded-shadow-color: rgb(17 17 18 / 25%) !important;
+            }
         `;
         document.head.appendChild(style);
     }
