@@ -44,10 +44,10 @@ function updatePresaleWidget() {
         }
 
         // Update token price
-        const priceElement = document.querySelector('.dashTitle');
-        if (priceElement) {
-            priceElement.textContent = '1 $HYPER = $' + presaleData.tokenPrice;
-        }
+        // const priceElement = document.querySelector('.dashTitle');
+        // if (priceElement) {
+        //     priceElement.textContent = '1 $PEPENODE = $' + presaleData.tokenPrice;
+        // }
 
         // Remove shimmer effects
         const shimmerElements = document.querySelectorAll('.shimmer');

