@@ -118,7 +118,7 @@ button[data-buy-override].wallet-disconnected {
   opacity: 0.8;
 }
 
-button[data-buy-override].wallet-connected {
+button[data-buy-override].wallet-connected {  
   box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
 }
 

